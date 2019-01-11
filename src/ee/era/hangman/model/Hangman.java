@@ -5,8 +5,8 @@ import static org.apache.commons.lang3.StringUtils.repeat;
 
 public class Hangman {
   private final String correctWord;
+  private static final int maxErrors = 6;
   private String word;
-
   private int errors;
 
   public Hangman(String correctWord) {
@@ -49,10 +49,10 @@ public class Hangman {
   }
 
   public boolean isLost() {
-    return errors >= 6;
+    return errors >= maxErrors;
   }
 
   public boolean isWon() {
-    return errors < 6 && word.equals(correctWord);
+    return errors < maxErrors && word.equals(correctWord);
   }
 }
