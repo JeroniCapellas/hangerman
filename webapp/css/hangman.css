@@ -3,28 +3,28 @@
 }
 
 #wordInWork span {
-  font-size: 60px;
-  margin-left: 10px;
+	font-size: 60px;
+	margin-left: 10px;
 }
 
 #alphabet td {
-  font-size: 48px;
-  width: 60px;
-  text-align: center;
+	font-size: 48px;
+	width: 60px;
+	text-align: center;
 }
 
 .buttonover {
-  background: #aaa;
+	background:#aaaaaa;
 }
 
 .used {
-  color: green;
-  text-decoration: line-through;
+	color: green;
+	text-decoration:line-through;
 }
 
 .nonused {
-  color: red;
-  text-decoration: line-through;
+	color: red;
+	text-decoration:line-through;
 }
 
 #hangmanImageContainer {
@@ -58,24 +58,16 @@ img.hangman {
 img#hangman1 {
   clip: rect(0px, 250px, 390px, 200px);
 }
-
 img#hangman2 {
   clip: rect(0px, 500px, 30px, 200px);
 }
-
 img#hangman3 {
   clip: rect(30px, 500px, 62px, 250px);
 }
-
 img#hangman4 {
   clip: rect(62px, 500px, 142px, 250px);
 }
-
 img#hangman5 {
-  clip: rect(142px, 350px, 390px, 250px);
-}
-
-img#hangman6 {
   clip: rect(142px, 500px, 390px, 250px);
 }
 

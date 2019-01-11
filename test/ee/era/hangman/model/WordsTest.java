@@ -1,9 +1,9 @@
 package ee.era.hangman.model;
 
+import org.junit.Test;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import org.junit.Test;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertTrue;
@@ -11,31 +11,34 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
 public class WordsTest {
-    private Words words = spy(new Words());
+  private Words words = spy(new Words());
 
-    @Test
-    public void choosesRandomTopicAndWord() {
-        doReturn(asList(new Word("home", "nail"), new Word("home", "toilet"), new Word("home", "kettle"), new Word("flora", "carnation"), new Word("flora", "bush"), new Word("fauna", "camel")))
-                .when(words).getDictionary("en");
+  @Test
+  public void choosesRandomTopicAndWord() {
+    doReturn(asList(
+        new Word("дом", "гвоздь"), new Word("дом", "унитаз"), new Word("дом", "чайник"),
+        new Word("флора", "гвоздика"), new Word("флора", "куст"),
+        new Word("фауна", "верблюд")
+    )).when(words).getDictionary("ru");
 
-        Map<String, Integer> count = new HashMap<>();
-        count.put("nail", 0);
-        count.put("toilet", 0);
-        count.put("kettle", 0);
-        count.put("carnation", 0);
-        count.put("bush", 0);
-        count.put("camel", 0);
+    Map<String, Integer> count = new HashMap<>();
+    count.put("гвоздь", 0);
+    count.put("унитаз", 0);
+    count.put("чайник", 0);
+    count.put("гвоздика", 0);
+    count.put("куст", 0);
+    count.put("верблюд", 0);
 
-        for (int i = 0; i < 2 * 6000; i++) {
-            Word randomWord = words.getRandomWord("en");
-            count.put(randomWord.getWord(), count.get(randomWord.getWord()) + 1);
-        }
-
-        assertTrue(count.get("nail") > 1000);
-        assertTrue(count.get("toilet") > 1000);
-        assertTrue(count.get("kettle") > 1000);
-        assertTrue(count.get("carnation") > 1000);
-        assertTrue(count.get("bush") > 1000);
-        assertTrue(count.get("camel") > 1000);
+    for (int i = 0; i < 2 * 6000; i++) {
+      Word randomWord = words.getRandomWord("ru");
+      count.put(randomWord.getWord(), count.get(randomWord.getWord()) + 1);
     }
+
+    assertTrue(count.get("гвоздь") > 1000);
+    assertTrue(count.get("унитаз") > 1000);
+    assertTrue(count.get("чайник") > 1000);
+    assertTrue(count.get("гвоздика") > 1000);
+    assertTrue(count.get("куст") > 1000);
+    assertTrue(count.get("верблюд") > 1000);
+  }
 }

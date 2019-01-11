@@ -43,4 +43,3 @@ Many thanks to these incredible tools that help us creating open-source software
 
 # License
 Hangman is open-source project and distributed under [MIT](http://choosealicense.com/licenses/mit/) license
-# hangerman

@@ -2,28 +2,28 @@ var isPlaying = false;
 var failures = 0;
 
 function startGame() {
-  failures = 0;
-  showFailures(0);
-  showAlphabet();
-  showWordInWork();
-  $(".restartGame").hide();
-  $("#gameWin").hide();
-  $("#gameLost").hide();
-  isPlaying = true;
+	failures = 0;
+	showFailures(0);
+	showAlphabet();
+	showWordInWork();
+	$(".restartGame").hide();
+	$("#gameWin").hide();
+	$("#gameLost").hide();
+	isPlaying = true;
 }
 
 function isGameLost() {
-  return failures > 6;
+  return failures > 5;
 }
 
 function showWordInWork() {
-  $("#topic").html(topic);
-  var wordContainer = $("#wordInWork");
-  wordContainer.empty();
+	$("#topic").html(topic);
+	var wordContainer = $("#wordInWork");
+	wordContainer.empty();
 
-  for (var i = 0; i < wordInWork.length; i++) {
-    $("<span>" + wordInWork.charAt(i) + "</span>").appendTo(wordContainer);
-  }
+	for (var i=0; i<wordInWork.length; i++) {
+		$("<span>" + wordInWork.charAt(i) + "</span>").appendTo(wordContainer);
+	}
 }
 
 function showFailures(failures) {
@@ -47,9 +47,6 @@ function showFailures(failures) {
     case 5:
       $("#hangmanImageContainer #hangman5").show();
       break;
-    case 6:
-      $("#hangmanImageContainer #hangman6").show();
-      break;
   }
 }
 
@@ -68,36 +65,30 @@ function gameOver() {
 }
 
 function showAlphabet() {
-  var alphabetContainer = $("#alphabet");
-  alphabetContainer.empty();
+	var alphabetContainer = $("#alphabet");
+	alphabetContainer.empty();
 
-  alphabetContainer.append("<table><tr>");
+	alphabetContainer.append("<table><tr>");
 
-  for (var i = 0; i < alphabet.length; i++) {
-    var letterContainer = $("<td></td>");
-    letterContainer.text(alphabet.charAt(i));
+	for (var i=0; i<alphabet.length; i++) {
+		var letterContainer = $("<td></td>");
+		letterContainer.text(alphabet.charAt(i));
     letterContainer.attr("letter", alphabet.charAt(i));
     letterContainer.addClass("letter");
-    letterContainer.appendTo(alphabetContainer);
+		letterContainer.appendTo(alphabetContainer);
 
-    if (i % 11 === 10) {
-      $("</tr><tr>").appendTo(alphabetContainer);
-    }
-  }
+		if (i % 11 === 10) {
+		  $("</tr><tr>").appendTo(alphabetContainer);
+		}
+	}
 
-  alphabetContainer.append("</tr></table>");
-  alphabetContainer.append($("#startGame").clone().removeAttr('id'));
+	alphabetContainer.append("</tr></table>");
+	alphabetContainer.append($("#startGame").clone().removeAttr('id'));
 
-  $(".letter")
-      .mouseover(function() {
-        $(this).addClass('buttonover');
-      })
-      .mouseout(function() {
-        $(this).removeClass('buttonover');
-      })
-      .click(function() {
-        guessLetter(this)
-      });
+	$(".letter")
+    .mouseover(function() {$(this).addClass('buttonover');})
+	  .mouseout(function() {$(this).removeClass('buttonover');})
+	  .click(function() {guessLetter(this)});
 }
 
 function guessLetter(letterContainer) {
@@ -105,8 +96,8 @@ function guessLetter(letterContainer) {
     return;
   }
 
-  letterContainer = $(letterContainer);
-  letterContainer.unbind("click");
+	letterContainer = $(letterContainer);
+	letterContainer.unbind("click");
 
   $.ajax({
     url: 'guess',
@@ -114,7 +105,7 @@ function guessLetter(letterContainer) {
     data: {'letter': letterContainer.text()},
     async: false,
     dataType: 'json',
-    success: function(result) {
+    success: function (result) {
       wordInWork = result.word;
       showWordInWork();
 
@@ -135,5 +126,5 @@ function guessLetter(letterContainer) {
 }
 
 $(function() {
-  startGame();
+	startGame();
 });

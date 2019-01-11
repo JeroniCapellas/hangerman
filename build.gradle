@@ -4,106 +4,102 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'scala'
 
-plugins {
-    id "org.sonarqube" version "2.6"
-}
-
 sourceSets {
-    main {
-        java { srcDir 'src' }
-        resources { srcDir 'src' }
-    }
-    test {
-        java { srcDir 'test' }
-        resources { srcDir 'test' }
-        scala { srcDirs 'test' }
-    }
+  main {
+    java {srcDir 'src'}
+    resources {srcDir 'src'}
+  }
+  test {
+    java {srcDir 'test'}
+    resources {srcDir 'test'}
+    scala { srcDirs 'test' }
+  }
 }
 
-repositories {
-    mavenCentral()
+repositories{
+  mavenCentral()
 }
 
 task libs(type: Sync) {
-    from configurations.compile
-    from configurations.providedCompile
-    from configurations.runtime
-    from configurations.providedRuntime
-    from configurations.testCompile
-    into "$buildDir/lib"
+  from configurations.compile
+  from configurations.providedCompile
+  from configurations.runtime
+  from configurations.providedRuntime
+  from configurations.testCompile
+  into "$buildDir/lib"
 }
 
 classes.dependsOn libs
 
-[compileJava, compileTestJava, compileScala, compileTestScala]*.options.collect { options -> options.encoding = 'UTF-8' }
-[compileJava, compileTestJava, compileScala, compileTestScala]*.options.collect { options -> options.debug = true }
+[compileJava, compileTestJava, compileScala, compileTestScala]*.options.collect {options -> options.encoding = 'UTF-8'}
+[compileJava, compileTestJava, compileScala, compileTestScala]*.options.collect {options -> options.debug = true}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 test {
-    include 'ee/era/hangman/**'
+  include 'ee/era/hangman/**'
 }
 
 task uitest(type: Test) {
-    systemProperties['browser'] = 'firefox'
+  systemProperties['browser'] = 'firefox'
 }
 
 task ie(type: Test) {
-    systemProperties['browser'] = 'ie'
-    systemProperties['timeout'] = '12000'
+  systemProperties['browser'] = 'ie'
+  systemProperties['timeout'] = '12000'
 }
 
 task htmlunit(type: Test) {
-    systemProperties['browser'] = 'htmlunit'
+  systemProperties['browser'] = 'htmlunit'
 }
 
 task chrome(type: Test) {
-    systemProperties['browser'] = 'chrome'
+  systemProperties['browser'] = 'chrome'
 }
 
 task phantomjs(type: Test) {
-    systemProperties['browser'] = 'phantomjs'
+  systemProperties['browser'] = 'phantomjs'
 }
 
 tasks.withType(Test).all { testTask ->
-    testTask.systemProperties['file.encoding'] = 'UTF-8'
-    testTask.testLogging.showStandardStreams = true
-    testTask.outputs.upToDateWhen { false }
+  testTask.systemProperties['file.encoding'] = 'UTF-8'
+  testTask.testLogging.showStandardStreams = true
+  testTask.outputs.upToDateWhen { false }
 }
 
 dependencies {
-    providedCompile 'org.eclipse.jetty:jetty-server:9.3.9.M1'
-    providedCompile 'org.eclipse.jetty:jetty-webapp:9.3.9.M1'
-    providedCompile 'org.eclipse.jetty:jetty-jsp:9.3.0.M1'
-    providedCompile 'org.eclipse.jetty.toolchain:jetty-osgi-servlet-api:3.1.0.M3'
+  providedCompile 'org.eclipse.jetty:jetty-server:9.3.9.M1'
+  providedCompile 'org.eclipse.jetty:jetty-webapp:9.3.9.M1'
+  providedCompile 'org.eclipse.jetty:jetty-jsp:9.3.0.M1'
+  providedCompile 'org.eclipse.jetty.toolchain:jetty-osgi-servlet-api:3.1.0.M3'
 
-    compile 'org.apache.struts:struts2-core:2.3.24.3'
-    compile 'org.apache.struts.xwork:xwork-core:2.3.24.3'
-    compile 'org.apache.struts:struts2-convention-plugin:2.3.24.3'
-    compile 'org.apache.struts:struts2-json-plugin:2.3.24.3'
-    compile 'org.liquibase:liquibase-core:3.6.2'
-    compile('com.google.inject.extensions:guice-struts2:4.0') {
-        exclude group: 'com.google.guava'
-    }
-    runtime 'com.h2database:h2:1.4.192'
-    compile 'c3p0:c3p0:0.9.1.2'
-    compile 'org.slf4j:slf4j-log4j12:1.7.21'
-    testCompile 'org.hamcrest:hamcrest-all:1.3'
-    testCompile('junit:junit:4.12') { transitive = false }
-    testCompile 'org.mockito:mockito-core:2.19.1'
-    testCompile 'com.codeborne:selenide:4.12.3'
-    testCompile 'com.codeborne:phantomjsdriver:1.4.4'
-    testCompile 'org.scala-lang:scala-library:2.11.8'
-    testCompile 'org.scalatest:scalatest_2.11:3.0.0'
+  compile 'org.apache.struts:struts2-core:2.3.24.3'
+  compile 'org.apache.struts.xwork:xwork-core:2.3.24.3'
+  compile 'org.apache.struts:struts2-convention-plugin:2.3.24.3'
+  compile 'org.apache.struts:struts2-json-plugin:2.3.24.3'
+  compile 'org.liquibase:liquibase-core:3.6.2'
+  compile('com.google.inject.extensions:guice-struts2:4.0') {
+    exclude group: 'com.google.guava'
+  }
+  runtime 'com.h2database:h2:1.4.192'
+  compile 'c3p0:c3p0:0.9.1.2'
+  compile 'org.slf4j:slf4j-log4j12:1.7.21'
+  testCompile 'org.hamcrest:hamcrest-all:1.3'
+  testCompile('junit:junit:4.12') {transitive = false}
+  testCompile 'org.mockito:mockito-core:2.19.1'
+  testCompile 'com.codeborne:selenide:4.12.3'
+  testCompile 'com.codeborne:phantomjsdriver:1.4.4'
+  testCompile 'org.scala-lang:scala-library:2.11.8'
+  testCompile 'org.scalatest:scalatest_2.11:3.0.0'
 }
 
 task(run, dependsOn: 'compile', type: JavaExec) {
-    main = 'ee.era.hangman.Launcher'
-    classpath = sourceSets.main.runtimeClasspath
-    systemProperty 'file.encoding', 'UTF-8'
+  main = 'ee.era.hangman.Launcher'
+  classpath = sourceSets.main.runtimeClasspath
+  systemProperty 'file.encoding', 'UTF-8'
 }
 
 war {
-    from 'webapp'
+  from 'webapp'
 }
