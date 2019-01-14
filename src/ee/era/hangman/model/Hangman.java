@@ -5,7 +5,7 @@ import static org.apache.commons.lang3.StringUtils.repeat;
 
 public class Hangman {
   private final String correctWord;
-  private static final int maxErrors = 7;
+  private static final int maxErrors = 6;
   private String word;
   private int errors;
 

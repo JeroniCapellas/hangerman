@@ -2,6 +2,7 @@ package uitest.selenide_page_objects;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import uitest.AbstractHangmanTest;
 
 import static com.codeborne.selenide.CollectionCondition.size;
@@ -39,14 +40,13 @@ public class HangmanSpec extends AbstractHangmanTest {
   }
 
   @Test
-  public void userHasNoMoreThan6Tries() {
+  public void userHasNoMoreThan5Tries() {
     page.guessLetter("B");
     page.guessLetter("D");
     page.guessLetter("E");
     page.guessLetter("G");
     page.guessLetter("H");
     page.guessLetter("I");
-    page.guessLetter("J");
     page.assertLetterIsNotUsed("B");
     page.assertGameIsLost();
   }

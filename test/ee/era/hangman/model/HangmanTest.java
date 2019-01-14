@@ -31,44 +31,34 @@ public class HangmanTest {
   @Test
   public void userWinsWhenAllLettersOfWordAreGuessed() {
     startGame("sofa");
-    game.guessLetter('s');
     game.guessLetter('o');
+    assertEquals("_o__", game.getWord());
+    game.guessLetter('p');
+    assertEquals("_o__", game.getWord());
     game.guessLetter('f');
+    assertEquals("_of_", game.getWord());
     game.guessLetter('a');
+    assertEquals("_ofa", game.getWord());
+    game.guessLetter('s');
     assertEquals("sofa", game.getWord());
-    assertFalse(game.isLost());
     assertTrue(game.isWon());
+    assertFalse(game.isLost());
   }
 
   @Test
-  public void userHas6Tries() {
+  public void userHas5Tries() {
     startGame("sofa");
-    game.guessLetter('b');
-    game.guessLetter('c');
-    game.guessLetter('d');
-    game.guessLetter('e');
-    game.guessLetter('g');
+    game.guessLetter('p');
+    game.guessLetter('q');
+    game.guessLetter('j');
+    game.guessLetter('h');
+    game.guessLetter('z');
     assertEquals("____", game.getWord());
     assertEquals(5, game.getErrors());
-    assertFalse(game.isLost());
-
-    game.guessLetter('h');
-    assertEquals("sofa", game.getWord());
-    assertEquals(6, game.getErrors());
+    game.guessLetter('i');
     assertTrue(game.isLost());
+    assertEquals("sofa", game.getWord());
     assertFalse(game.isWon());
-  }
-
-  @Test
-  public void supportsCyrillicCharacters() {
-    startGame("Диван");
-    game.guessLetter('н');
-    game.guessLetter('а');
-    game.guessLetter('в');
-    game.guessLetter('и');
-    game.guessLetter('д');
-    assertEquals("Диван", game.getWord());
-    assertTrue(game.isWon());
   }
 
   @Test
@@ -87,5 +77,17 @@ public class HangmanTest {
     game.guessLetter('o');
     assertEquals("To_Co__", game.getWord());
     assertEquals(0, game.getErrors());
+  }
+
+  @Test
+  public void supportsCyrillicCharacters() {
+    startGame("Диван");
+    game.guessLetter('н');
+    game.guessLetter('а');
+    game.guessLetter('в');
+    game.guessLetter('и');
+    game.guessLetter('д');
+    assertEquals("Диван", game.getWord());
+    assertTrue(game.isWon());
   }
 }

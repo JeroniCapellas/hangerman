@@ -1,15 +1,21 @@
 package uitest.selenide;
 
-import com.codeborne.selenide.SelenideElement;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+
+import com.codeborne.selenide.SelenideElement;
+
 import uitest.AbstractHangmanTest;
 
 import static com.codeborne.selenide.CollectionCondition.size;
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.cssClass;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.open;
 
 public class HangmanSpec extends AbstractHangmanTest {
   @Before
@@ -41,16 +47,26 @@ public class HangmanSpec extends AbstractHangmanTest {
   }
 
   @Test
-  public void userHasNoMoreThan6Tries() {
+  public void userHasNoMoreThan5Tries() {
     letter("B").click();
+    assertHangmanImageByErrors(1);
     letter("D").click();
+    assertHangmanImageByErrors(2);
     letter("E").click();
+    assertHangmanImageByErrors(3);
     letter("G").click();
+    assertHangmanImageByErrors(4);
     letter("H").click();
+    assertHangmanImageByErrors(5);
     letter("I").click();
-    letter("J").click();
     letter("B").shouldHave(cssClass("nonused"));
     $("#gameLost").shouldBe(visible);
+  }
+
+  private void assertHangmanImageByErrors(int numErrors) {
+    for (int i = 1; i <= numErrors; i++) {
+      $("hangman" + i).isDisplayed();
+    }
   }
 
   @Test

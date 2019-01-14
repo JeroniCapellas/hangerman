@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.support.PageFactory;
+
 import uitest.AbstractHangmanTest;
 
 import static java.lang.Thread.sleep;
@@ -69,16 +70,26 @@ public class HangmanTestUsingPageObject extends AbstractHangmanTest {
   }
 
   @Test
-  public void userHasNoMoreThan6Tries() {
+  public void userHasNoMoreThan5Tries() {
     hangmanPage.guessLetter('B');
+    assertHangmanImageByErrors(1);
     hangmanPage.guessLetter('D');
+    assertHangmanImageByErrors(2);
     hangmanPage.guessLetter('E');
+    assertHangmanImageByErrors(3);
     hangmanPage.guessLetter('G');
+    assertHangmanImageByErrors(4);
     hangmanPage.guessLetter('H');
+    assertHangmanImageByErrors(5);
     hangmanPage.guessLetter('I');
-    hangmanPage.guessLetter('J');
     assertThat(hangmanPage.letter('B').getAttribute("class"), containsString("nonused"));
     assertThat(hangmanPage.gameLost.isDisplayed(), is(true));
+  }
+
+  private void assertHangmanImageByErrors(int numErrors) {
+    for (int i = 1; i <= numErrors; i++) {
+      ((PhantomJSDriver) driver).findElementById("hangman" + i).isDisplayed();
+    }
   }
 
   @Test
