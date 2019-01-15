@@ -43,3 +43,6 @@ Many thanks to these incredible tools that help us creating open-source software
 
 # License
 Hangman is open-source project and distributed under [MIT](http://choosealicense.com/licenses/mit/) license
+
+# run sonarqube analysis
+gradle sonarqube -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=jeronicapellas-github -Dsonar.login=a0595f479ee9d2120066911ec0a5d2043716908c

@@ -14,6 +14,22 @@ public class HangmanTest {
   }
 
   @Test
+  public void userHas7Tries() {
+    startGame("sofa");
+    game.guessLetter('p');
+    game.guessLetter('q');
+    game.guessLetter('j');
+    game.guessLetter('h');
+    game.guessLetter('z');
+    assertEquals("____", game.getWord());
+    assertEquals(5, game.getErrors());
+    game.guessLetter('i');
+    assertTrue(game.isLost());
+    assertEquals("sofa", game.getWord());
+    assertFalse(game.isWon());
+  }
+
+  @Test
   public void userCanGuessLetters() {
     startGame("sofa");
     assertEquals("____", game.getWord());
@@ -43,22 +59,6 @@ public class HangmanTest {
     assertEquals("sofa", game.getWord());
     assertTrue(game.isWon());
     assertFalse(game.isLost());
-  }
-
-  @Test
-  public void userHas5Tries() {
-    startGame("sofa");
-    game.guessLetter('p');
-    game.guessLetter('q');
-    game.guessLetter('j');
-    game.guessLetter('h');
-    game.guessLetter('z');
-    assertEquals("____", game.getWord());
-    assertEquals(5, game.getErrors());
-    game.guessLetter('i');
-    assertTrue(game.isLost());
-    assertEquals("sofa", game.getWord());
-    assertFalse(game.isWon());
   }
 
   @Test
